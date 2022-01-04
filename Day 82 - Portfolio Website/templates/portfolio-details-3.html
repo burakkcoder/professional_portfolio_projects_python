@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Portfolio Details</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Portfolio Details</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+
+            <video width="600" height="400" controls>
+                <source src="static/video/Day64.mp4" type="video/mp4">
+                <source src="movie.ogg" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>Project information</h3>
+              <ul>
+                <li><strong>Category</strong>: My Top 10 Movies</li>
+                <li><strong>Project date</strong>: 28 December, 2020</li>
+                <li><strong>Project URL</strong>: <a href="#">https://github.com/burakkcoder</a></li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <h2>Details</h2>
+              <p>
+                I made a web application using bootstrap, flask and sqlalchemy.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+{% endblock %}
