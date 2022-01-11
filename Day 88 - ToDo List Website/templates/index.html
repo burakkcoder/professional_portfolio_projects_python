@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/8244a4a8ae.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container m-5 p-2 rounded mx-auto bg-light shadow">
+        <!-- App title section -->
+        <div class="row m-1 p-4">
+            <div class="col">
+                <div class="p-1 h1 text-primary text-center mx-auto display-inline-block">
+                    <i class="fa fa-check bg-primary text-white rounded p-2"></i>
+                    <u>Ajandam</u>
+                </div>
+            </div>
+        </div>
+        <!-- Create todo section -->
+        <form action="/add" method="post">
+            <div class="mx-auto col-11 col input-with-post-icon datepicker">
+                <input placeholder="Select date" type="date" id="example" class="form-control" name = "ddate">
+            </div>
+            <div class="row m-1 p-3">
+                <div class="col col-11 mx-auto">
+                    <div
+                        class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
+                        <div class="col">
+                            <input class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded"
+                                type="text" placeholder="Ekle..." name="title">
+                        </div>
+                        <div class="col-auto px-0 mx-0 mr-2">
+                            <button type="submit" class="btn btn-primary">Ekle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="p-2 mx-4 border-black-25 border-bottom"></div>
+        <!-- Todo list section -->
+        {% if todos == [] %}
+        <div class="row mx-1 px-5 pb-3 w-80">
+            <div class="col mx-auto">
+                <div class="row px-3 align-items-center todo-item rounded">
+                    <div class="col-auto m-1 p-0 d-flex align-items-center">
+                        <div class="alert alert-primary mt-3" role="alert">
+                            Herhangi Bir Bilgi Bulunmuyor!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row mx-1 px-5 pb-3 w-80">
+            <div class="col mx-auto">
+                {% for x in todos  %}
+                <!-- Todo Item 2 -->
+                <div class="row px-3 align-items-center todo-item rounded">
+                    <div class="col-auto m-1 p-0 d-flex align-items-center">
+                        <h2 class="m-0 p-0">
+                            {% if x.complete == False %}
+                            <a href="/complete/{{x.id}}"><i class="far fa-square text-primary btn m-0 p-0" data-toggle="tooltip"
+                                data-placement="bottom" title="Tamamlandı Olarak İşaretle"></i></a>
+                            {% else %}
+                            <a href="/complete/{{x.id}}"><i class="far fa-check-square text-primary btn m-0 p-0" data-toggle="tooltip"
+                                data-placement="bottom" title="Tamamlanmadı Olarak İşaretle"></i></a>
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="col px-1 m-1 d-flex align-items-center">
+                        <input type="text"
+                            class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3"
+                            readonly value="{{x.title}}" title="{{x.title}}" />
+                        <input type="text"
+                            class="form-control form-control-lg border-0 edit-todo-input rounded px-3 d-none"
+                            value="{{x.title}}" />
+                    </div>
+                    <div class="col-auto m-1 p-0 px-3">
+                        <div class="row">
+                            <div class="col-auto d-flex align-items-center rounded bg-white border border-warning">
+                                {% if x.complete == False %}
+                                <i class="fa fa-hourglass-2 my-2 px-2 text-warning btn" data-toggle="tooltip"
+                                    data-placement="bottom" title="" data-original-title="Tarih"></i>
+                                <h6 class="text my-2 pr-2">{{x.ddate}}</h6>
+                                {% else %}
+                                <i class="fas fa-check my-2 px-2 text-warning btn" data-toggle="tooltip"
+                                    data-placement="bottom" title="" data-original-title="Tarih"></i>
+                                <h6 class="text my-2 pr-2">{{x.ddate}}</h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto m-1 p-0 todo-actions">
+                        <div class="row d-flex align-items-center justify-content-end">
+                            <h5 class="m-0 p-0 px-2">
+                                <a href="/delete/{{x.id}}"><i class="fa fa-trash-o text-danger btn m-0 p-0" data-toggle="tooltip"
+                                    data-placement="bottom" title="İşi Sil"></i></a>
+                            </h5>
+                        </div>
+                        <div class="row todo-created-info">
+                            <div class="col-auto d-flex align-items-center pr-2">
+                                <i class="fa fa-info-circle my-2 px-2 text-black-50 btn" data-toggle="tooltip"
+                                    data-placement="bottom" title="" data-original-title="Tarih Oluşturuldu"></i>
+                                <label class="date-label my-2 text-black-50">{{x.ddate}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <script src="static/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous">
+    </script>
+    <script>
+        $('.datepicker').datepicker();
+    </script>
+</body>
+
+</html>
